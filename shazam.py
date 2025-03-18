@@ -3,17 +3,22 @@ import math
 import os
 import re
 import time
+import shutil
 
 from mutagen.easyid3 import EasyID3
 from mutagen.id3 import ID3, TIT2, TPE1
 
 from shazamio import Shazam
 from pydub import AudioSegment
-import shutil
 
 shazam = Shazam()
 
-path_to_dir = os.environ.get("PATH_TO_DIR")
+# Use fixed folder paths from volume mounts
+path_to_dir = "/app/to_process"
+processed_folder = "/app/processed_songs"
+if not os.path.exists(processed_folder):
+    os.makedirs(processed_folder)
+
 music_segment_duration = 30000  # milliseconds
 check_delay = 1  # seconds
 output_file = "./songs.txt"
@@ -95,10 +100,6 @@ async def recognize(chunk_path, original_file):
 
 
 async def main():
-    if not path_to_dir:
-        print("PATH_TO_DIR not set")
-        return
-
     print("Start...")
     files = [
         f
@@ -118,6 +119,7 @@ async def main():
         split_files = sorted(split_files, key=alphanum_key)
         print("Recognize...")
         # Process each chunk until recognition is successful
+        recognized_success = False
         for split_file in split_files:
             time.sleep(check_delay)
             recognized = await recognize(
@@ -125,10 +127,18 @@ async def main():
                              split_file), original_file_path
             )
             if recognized:
+                recognized_success = True
                 # Stop checking remaining fragments after successful recognition
                 break
         print("Deleting:", path_to_split_folder)
         shutil.rmtree(path_to_split_folder, ignore_errors=True)
+        if recognized_success:
+            dest_path = os.path.join(processed_folder, file)
+            print(f"Moving {original_file_path} to {dest_path}")
+            shutil.move(original_file_path, dest_path)
+        else:
+            print(
+                f"File {file} was not successfully recognized. Leaving it in {path_to_dir}.")
 
 
 loop = asyncio.get_event_loop()
