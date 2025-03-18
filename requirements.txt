@@ -1,0 +1,6 @@
+watchdog
+mutagen
+requests
+paramiko
+pydub
+shazamio

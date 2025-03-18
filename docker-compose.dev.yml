@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: music-watchdog
+    environment:
+      - PATH_TO_DIR=/to_process_files_dir
+    volumes:
+      - ./:/app
+    command: python shazam.py

@@ -1,0 +1,9 @@
+services:
+  app:
+    image: ghcr.io/subasically/music-watchdog:latest
+    container_name: music-watchdog
+    environment:
+      - PATH_TO_DIR=/app/to_process
+    volumes:
+      - ./:/app
+    command: python shazam.py
