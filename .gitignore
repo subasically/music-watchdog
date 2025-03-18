@@ -1,0 +1,31 @@
+# General files to ignore
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files and temporary files
+*.log
+*.tmp
+tmp/
+temp/
+.venv
+
+# Ignore backup files
+*~
+*.bak
+*.swp
+
+# Ignore node_modules if applicable
+node_modules/
+
+# Ignore environment files
+.env
+
+# Ignore compiled Python files if applicable
+*.pyc
+__pycache__/
+
+# Ignore build directories
+build/
+dist/
