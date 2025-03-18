@@ -3,7 +3,6 @@ services:
     image: ghcr.io/subasically/music-watchdog:latest
     container_name: azuracast-music-watchdog
     volumes:
-    volumes:
       - /path/on/host/to_process:/app/to_process
       - /path/on/host/processed_songs:/app/processed_songs
     command: python shazam.py
