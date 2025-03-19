@@ -7,6 +7,12 @@ services:
       - TZ=America/Chicago
       - DEBUG=False
       - SLACK_WEBHOOK_URL=""
+      # - SFTP_USERNAME=""
+      # - SFTP_HOST=""
+      # - SFTP_PASSWORD=""
+      # - SFTP_PORT=""
+      # - SFTP_REMOTE_DIR=""
+      # - SFTP_LOCAL_DIR=""
     volumes:
       - /path/on/host/to_process:/app/to_process
       - /path/on/host/processed_songs:/app/processed_songs
