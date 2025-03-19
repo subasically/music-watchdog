@@ -26,6 +26,3 @@ def send_slack_notification(message: str) -> bool:
         log.error(f"Failed to send Slack notification: {error}")
         return False
     return True
-
-
-send_slack_notification("Hello from Shazamify!")
