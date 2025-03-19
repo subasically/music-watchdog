@@ -1,5 +1,6 @@
 import os
 from pydub import AudioSegment
+from logger import logger
 
 
 def convert_m4a_to_mp3(m4a_file, output_dir=None):
@@ -11,7 +12,7 @@ def convert_m4a_to_mp3(m4a_file, output_dir=None):
         output_dir = os.path.dirname(m4a_file)
     base = os.path.splitext(os.path.basename(m4a_file))[0]
     mp3_file = os.path.join(output_dir, base + ".mp3")
-    print(f"Converting {m4a_file} -> {mp3_file}")
+    logger.debug(f"Converting {m4a_file} -> {mp3_file}")
     audio = AudioSegment.from_file(m4a_file, format="m4a")
     audio.export(mp3_file, format="mp3")
     return mp3_file

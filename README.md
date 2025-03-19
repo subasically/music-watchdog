@@ -5,3 +5,4 @@
 ### Future Enhancements
 
 - Get Album Artwork and add to metadata
+- SFTP upload processed_songs to azuracast
