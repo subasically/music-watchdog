@@ -2,6 +2,10 @@ services:
   app:
     image: ghcr.io/subasically/music-watchdog:latest
     container_name: azuracast-music-watchdog
+    restart: unless-stopped
+    environment:
+      - TZ=America/Chicago
+      - DEBUG=False
     volumes:
       - /path/on/host/to_process:/app/to_process
       - /path/on/host/processed_songs:/app/processed_songs
