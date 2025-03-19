@@ -11,8 +11,8 @@ log = logger.logger
 shazam = Shazam()
 
 # Use fixed folder paths from volume mounts (changed processed_folder to a relative path)
-path_to_dir = "/to_process"
-processed_folder = "/processed_songs"
+path_to_dir = "/app/to_process"
+processed_folder = "/app/processed_songs"
 if not os.path.exists(path_to_dir):
     os.makedirs(path_to_dir)  # Ensure input directory exists
 if not os.path.exists(processed_folder):
