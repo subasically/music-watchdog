@@ -45,5 +45,5 @@ async def main():
         log.debug("Waiting 1 second before next processing cycle.")
         await asyncio.sleep(1)
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+# Replace loop creation with asyncio.run(main())
+asyncio.run(main())
