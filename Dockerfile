@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY /app /app
 
 # Run the app
-CMD ["python", "shazam.py"]
+CMD ["python", "main.py"]
