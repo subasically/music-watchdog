@@ -48,9 +48,14 @@ async def process_file(file, path_to_dir, processed_folder, music_segment_durati
     log.debug(
         f"Finished processing chunks for file: {file}. Deleting split folder.")
     shutil.rmtree(path_to_split_folder, ignore_errors=True)
+    # Move file regardless: if recognized move to processed_folder,
+    # otherwise move to an "unrecognized" subfolder to avoid reprocessing.
     if recognized_success:
-        dest_path = os.path.join(processed_folder, file)
-        log.info(f"Moving file from {original_file_path} to {dest_path}")
-        shutil.move(original_file_path, dest_path)
+        dest_folder = processed_folder
     else:
-        log.info(f"File {file} was not recognized. Left in {path_to_dir}.")
+        dest_folder = os.path.join(path_to_dir, "unrecognized")
+        if not os.path.exists(dest_folder):
+            os.makedirs(dest_folder)
+    dest_path = os.path.join(dest_folder, file)
+    log.info(f"Moving file from {original_file_path} to {dest_path}")
+    shutil.move(original_file_path, dest_path)
