@@ -5,7 +5,7 @@ services:
     volumes:
       - /path/on/host/to_process:/app/to_process
       - /path/on/host/processed_songs:/app/processed_songs
-    command: python shazam.py
+    command: python main.py
 
 volumes:
   FILES_TO_PROCESS_DIR: {}
