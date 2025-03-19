@@ -4,6 +4,7 @@ import logger as logger
 import asyncio
 import sys
 import os
+from notifier import send_slack_notification
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
 
@@ -27,6 +28,7 @@ skip_chunk = 2  # 1 - every, 2 - odd ...
 async def main():
     while True:
         log.info("Main processing cycle started")
+        send_slack_notification("Music Watchdog is running")
         files = [f for f in os.listdir(path_to_dir) if os.path.isfile(
             os.path.join(path_to_dir, f))]
         file_count = len(files)
@@ -36,6 +38,7 @@ async def main():
             await asyncio.sleep(300)
             continue
         for file in files:
+            send_slack_notification(f"Processing file: {file}")
             await processing.process_file(file, path_to_dir, processed_folder,
                                           music_segment_duration, skip_chunk,
                                           check_delay, output_file, shazam)

@@ -6,6 +6,7 @@ services:
     environment:
       - TZ=America/Chicago
       - DEBUG=False
+      - SLACK_WEBHOOK_URL=""
     volumes:
       - /path/on/host/to_process:/app/to_process
       - /path/on/host/processed_songs:/app/processed_songs
