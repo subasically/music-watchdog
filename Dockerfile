@@ -11,8 +11,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the main script
-COPY shazam.py .
-COPY convert_m4a.py .
+COPY /app /app
 
 # Run the app
 CMD ["python", "shazam.py"]
