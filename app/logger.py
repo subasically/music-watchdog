@@ -22,6 +22,7 @@ def setup_logger():
         fh.setFormatter(formatter)
         logger.addHandler(fh)
     else:
+        print("Debug mode is off. Disabling logger.")
         logger.disabled = True
         logger.handlers = []
         logger.setLevel(logging.CRITICAL)
