@@ -15,9 +15,10 @@ shazam = Shazam()
 path_to_dir = "/app/to_process"
 processed_folder = "/app/processed_songs"
 if not os.path.exists(path_to_dir):
-    os.makedirs(path_to_dir)  # Ensure input directory exists
+    # Ensure input directory exists
+    os.makedirs(path_to_dir, mode=0o777, exist_ok=True)
 if not os.path.exists(processed_folder):
-    os.makedirs(processed_folder)
+    os.makedirs(processed_folder, mode=0o777, exist_ok=True)
 
 music_segment_duration = 30000  # milliseconds
 check_delay = 1  # seconds

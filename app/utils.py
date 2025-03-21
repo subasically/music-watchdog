@@ -99,7 +99,7 @@ def split_audio_file(input_file_path, output_folder_path, music_segment_duration
     chunk_length_ms = music_segment_duration
 
     if not os.path.exists(output_folder_path):
-        os.makedirs(output_folder_path)
+        os.makedirs(output_folder_path, mode=0o777, exist_ok=True)
 
     total_fragments = math.ceil(len(audio) / chunk_length_ms / skip_chunk)
     log.info(
