@@ -1,17 +1,23 @@
+# filepath: Dockerfile
 FROM python:3.12-slim
 
-# Install ffmpeg and other system dependencies
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
 RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
 
-# Set working directory to /app
+# Create group and user with the specified UID/GID.
+RUN addgroup --gid ${GROUP_ID} appgroup && \
+    adduser --disabled-password --gecos "" --uid ${USER_ID} --ingroup appgroup appuser
+
 WORKDIR /app
 
-# Copy dependencies and install them
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
 
-# Copy the main script
-COPY /app /app
+# Change ownership and run as appuser.
+RUN chown -R appuser:appgroup /app
+USER appuser
 
-# Run the app
-CMD ["python", "-u", "main.py"]
+CMD ["python", "-u", "app/main.py"]

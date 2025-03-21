@@ -3,7 +3,7 @@ services:
     image: ghcr.io/subasically/music-watchdog:latest
     container_name: azuracast-music-watchdog
     restart: unless-stopped
-    user: "1000:1000"
+    user: "${HOST_UID}:${HOST_GID}" # Set the user to match the host's UID and GID (find these using "id -u" and "id -g")
     environment:
       - TZ=America/Chicago
       - DEBUG=False
