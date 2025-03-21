@@ -22,10 +22,12 @@ def setup_logger():
         fh.setFormatter(formatter)
         logger.addHandler(fh)
     else:
-        print("Debug mode is off. Disabling logger.")
-        logger.disabled = True
-        logger.handlers = []
-        logger.setLevel(logging.CRITICAL)
+        ch = logging.StreamHandler(sys.stdout)
+        ch.setLevel(logging.INFO)
+        ch.setFormatter(formatter)
+        logger.addHandler(ch)
+        logger.setLevel(logging.INFO)
+        print("Debug mode is off. Logger set to INFO level.")
 
     return logger
 
