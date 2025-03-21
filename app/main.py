@@ -26,9 +26,9 @@ skip_chunk = 2  # 1 - every, 2 - odd ...
 
 
 async def main():
+    send_slack_notification("Music Watchdog is running")
     while True:
         log.info("Main processing cycle started")
-        send_slack_notification("Music Watchdog is running")
         files = [f for f in os.listdir(path_to_dir) if os.path.isfile(
             os.path.join(path_to_dir, f))]
         file_count = len(files)
