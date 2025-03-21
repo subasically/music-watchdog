@@ -71,4 +71,4 @@ jobs:
       - name: Trigger Portainer Update Webhook
         if: success()
         run: |
-          curl -L -H "User-Agent: Mozilla/5.0" -X POST https://docker.subasically.me/api/stacks/webhooks/15b69d37-5587-430a-a019-9f641f55ef2c
+          curl -L -X POST https://docker.subasically.me/api/stacks/webhooks/15b69d37-5587-430a-a019-9f641f55ef2c
