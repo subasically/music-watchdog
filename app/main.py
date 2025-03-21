@@ -46,7 +46,7 @@ async def main():
 
         if file_count > 0:
             for file in files:
-                send_slack_notification(f"Processing file: {file}")
+                log.info(f"Processing file: {file}")
                 await processing.process_file(file, path_to_dir, processed_folder,
                                               music_segment_duration, skip_chunk,
                                               check_delay, output_file, shazam)
@@ -79,7 +79,11 @@ async def main():
                 log.info("No processed files pending upload.")
 
         log.info(f"Sleeping for {sleep_time_minutes} minutes.")
-        await asyncio.sleep(sleep_time_seconds)
+        remaining_minutes = sleep_time_minutes
+        while remaining_minutes > 0:
+            log.info(f"Sleeping for {remaining_minutes} minute(s)")
+            await asyncio.sleep(60)
+            remaining_minutes -= 1
 
 asyncio.run(main())
 
