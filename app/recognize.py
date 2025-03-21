@@ -2,6 +2,7 @@ import os
 import difflib
 import logger as logger
 from utils import update_mp3_metadata
+from notifier import send_slack_notification
 
 log = logger.logger
 
@@ -41,6 +42,10 @@ async def recognize(chunk_path, original_file, output_file, shazam):
         recognized_title = track_data.get("title", "")
         log.debug(
             f"Track detected: {recognized_artist} - {recognized_title} for file: {original_file}")
+
+        # Send slack notification
+        send_slack_notification(
+            f"Recognized: {recognized_artist} - {recognized_title}")
 
         # Validate recognition by comparing with the local file name.
         if not is_match(recognized_artist, recognized_title, original_file):
