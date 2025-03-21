@@ -18,7 +18,7 @@ services:
     volumes:
       - /path/on/host/to_process:/app/to_process
       - /path/on/host/processed_songs:/app/processed_songs
-    command: python main.py
+    command: python -u app/main.py
 
 volumes:
   FILES_TO_PROCESS_DIR: {}
