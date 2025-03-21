@@ -24,6 +24,9 @@ check_delay = 1  # seconds
 output_file = "./songs.txt"
 skip_chunk = 2  # 1 - every, 2 - odd ...
 
+sleep_time_minutes = int(os.getenv("SLEEP_TIME_MINUTES", "5"))
+sleep_time_seconds = sleep_time_minutes * 60
+
 
 async def main():
     log.info("Starting Music Watchdog")
@@ -37,8 +40,9 @@ async def main():
         file_count = len(files)
         log.info(f"Found {file_count} files in {path_to_dir}")
         if file_count == 0:
-            log.info("No files found. Sleeping for 5 minutes.")
-            await asyncio.sleep(300)
+            log.info(
+                f"No files found. Sleeping for {sleep_time_minutes} minutes.")
+            await asyncio.sleep(sleep_time_seconds)
             continue
         for file in files:
             send_slack_notification(f"Processing file: {file}")
