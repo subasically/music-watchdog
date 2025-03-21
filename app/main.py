@@ -16,8 +16,13 @@ path_to_dir = "/app/to_process"
 processed_folder = "/app/processed_songs"
 if not os.path.exists(path_to_dir):
     # Ensure input directory exists
+    log.info(
+        f"Input directory {path_to_dir} does not exist. Creating it.")
     os.makedirs(path_to_dir, mode=0o777, exist_ok=True)
 if not os.path.exists(processed_folder):
+    # Ensure processed directory exists
+    log.info(
+        f"Processed directory {processed_folder} does not exist. Creating it.")
     os.makedirs(processed_folder, mode=0o777, exist_ok=True)
 
 music_segment_duration = 30000  # milliseconds

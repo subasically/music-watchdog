@@ -32,6 +32,8 @@ def prepare_split_folder(file, path_to_dir):
     split_folder = file.split(".")[0]
     path_to_split_folder = os.path.join(path_to_dir, split_folder)
     if not os.path.exists(path_to_split_folder):
+        # Create the split folder if it doesn't exist
+        log.debug(f"Creating split folder: {path_to_split_folder}")
         os.makedirs(path_to_split_folder, mode=0o777, exist_ok=True)
     return path_to_split_folder
 
@@ -74,7 +76,9 @@ def move_file(original_file_path, file, path_to_dir, processed_folder, recognize
     else:
         dest_folder = os.path.join(path_to_dir, "unrecognized")
         if not os.path.exists(dest_folder):
-            os.makedirs(dest_folder)
+            # Create the unrecognized folder if it doesn't exist
+            log.debug(f"Creating unrecognized folder: {dest_folder}")
+            os.makedirs(dest_folder, mode=0o777, exist_ok=True)
     dest_path = os.path.join(dest_folder, file)
     log.info(f"Moving file from {original_file_path} to {dest_path}")
     shutil.move(original_file_path, dest_path)
