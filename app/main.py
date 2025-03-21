@@ -64,7 +64,7 @@ async def main():
                     sftp_username = os.environ.get("SFTP_USERNAME")
                     sftp_host = os.environ.get("SFTP_HOST")
                     sftp_password = os.environ.get("SFTP_PASSWORD")
-                    sftp_port = os.environ.get("SFTP_PORT", "22")
+                    sftp_port = int(os.environ.get("SFTP_PORT", 2022))
                     sftp_remote_dir = os.environ.get(
                         "SFTP_REMOTE_DIR", "/upload")
                     if sftp_username and sftp_host and sftp_password:

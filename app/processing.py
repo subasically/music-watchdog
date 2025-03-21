@@ -117,7 +117,7 @@ async def process_file(file, path_to_dir, processed_folder, music_segment_durati
         sftp_username = os.environ.get("SFTP_USERNAME")
         sftp_host = os.environ.get("SFTP_HOST")
         sftp_password = os.environ.get("SFTP_PASSWORD")
-        sftp_port = os.environ.get("SFTP_PORT", "22")
+        sftp_port = int(os.environ.get("SFTP_PORT", "22"))
         sftp_remote_dir = os.environ.get("SFTP_REMOTE_DIR", "/upload")
         if sftp_username and sftp_host and sftp_password:
             upload_success = upload_file_sftp(

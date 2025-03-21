@@ -74,7 +74,7 @@ if __name__ == "__main__":
     sftp_username = os.environ.get("SFTP_USERNAME")
     sftp_host = os.environ.get("SFTP_HOST")
     sftp_password = os.environ.get("SFTP_PASSWORD")
-    sftp_port = os.environ.get("SFTP_PORT", "22")
+    sftp_port = int(os.environ.get("SFTP_PORT", "22"))
     sftp_remote_dir = os.environ.get("SFTP_REMOTE_DIR", "/upload")
 
     # Example file path—adjust as needed.

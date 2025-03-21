@@ -12,7 +12,7 @@ services:
       # - SFTP_USERNAME=""
       # - SFTP_HOST=""
       # - SFTP_PASSWORD=""
-      # - SFTP_PORT=""
+      # - SFTP_PORT=2022
       # - SFTP_REMOTE_DIR=""
       # - SFTP_LOCAL_DIR=""
     volumes:
