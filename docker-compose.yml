@@ -3,11 +3,12 @@ services:
     image: ghcr.io/subasically/music-watchdog:latest
     container_name: azuracast-music-watchdog
     restart: unless-stopped
+    user: "1000:1000"
     environment:
       - TZ=America/Chicago
       - DEBUG=False
-      - SLACK_WEBHOOK_URL=""
       - SLEEP_TIME_MINUTES=5
+      # - SLACK_WEBHOOK_URL=""
       # - SFTP_USERNAME=""
       # - SFTP_HOST=""
       # - SFTP_PASSWORD=""
