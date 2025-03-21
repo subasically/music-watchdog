@@ -57,8 +57,8 @@ async def main():
                                if os.path.isfile(os.path.join(processed_folder, f))]
             if processed_files:
                 for file in processed_files:
-                    send_slack_notification(
-                        f"Attempting SFTP upload for processed file: {file}")
+                    log.info(f"Found processed file pending upload: {file}")
+                    # Upload the processed file to SFTP.
                     file_path = os.path.join(processed_folder, file)
                     # Retrieve SFTP credentials from environment.
                     sftp_username = os.environ.get("SFTP_USERNAME")
