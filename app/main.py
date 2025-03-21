@@ -31,7 +31,6 @@ sleep_time_seconds = sleep_time_minutes * 60
 
 async def main():
     log.info("Starting Music Watchdog")
-    print("Starting Music Watchdog")
 
     send_slack_notification("Music Watchdog is running")
 
