@@ -45,9 +45,10 @@ async def main():
         file_count = len(files)
         log.info(f"Found {file_count} files in {path_to_dir}")
         if file_count == 0:
-            log.info(
-                f"No files found. Sleeping for {sleep_time_minutes} minutes.")
-            await asyncio.sleep(sleep_time_seconds)
+            for remaining in range(sleep_time_minutes, 0, -1):
+                log.info(
+                    f"Sleeping for {remaining} minute{'s' if remaining != 1 else ''}.")
+                await asyncio.sleep(60)
             continue
         for file in files:
             send_slack_notification(f"Processing file: {file}")
