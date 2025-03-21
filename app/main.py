@@ -26,6 +26,7 @@ skip_chunk = 2  # 1 - every, 2 - odd ...
 
 
 async def main():
+    log.info("Starting Music Watchdog")
     send_slack_notification("Music Watchdog is running")
     while True:
         log.info("Main processing cycle started")
@@ -45,5 +46,5 @@ async def main():
         log.debug("Waiting 1 second before next processing cycle.")
         await asyncio.sleep(1)
 
-# Replace loop creation with asyncio.run(main())
+
 asyncio.run(main())
