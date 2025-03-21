@@ -16,6 +16,7 @@ services:
       # - SFTP_REMOTE_DIR=""
       # - SFTP_LOCAL_DIR=""
     volumes:
+      # Ensure you have created these directories on your host before starting the container.
       - /path/on/host/to_process:/app/to_process
       - /path/on/host/processed_songs:/app/processed_songs
     command: python -u app/main.py

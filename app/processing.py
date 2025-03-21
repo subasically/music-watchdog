@@ -5,6 +5,7 @@ import logger as logger
 import convert_m4a
 from utils import alphanum_key, split_audio_file
 from recognize import recognize
+from sftp_upload import upload_file_sftp
 
 log = logger.logger
 

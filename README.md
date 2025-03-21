@@ -26,6 +26,21 @@ Music Watchdog is a Python-based application that monitors a designated folder f
 - Docker (optional) if you wish to run the application via containers
 - Environment variables for SFTP and Slack notifications as needed
 
+## Required Directories
+
+Before running Music Watchdog, ensure that the following directories exist on your host:
+
+- **Input files directory** (`to_process`): This is where you should place your files to be processed.
+
+For example, on a Linux host, you can create these directories and adjust their ownership/permissions with:
+
+```bash
+sudo mkdir -p /path/on/host/to_process
+sudo chown -R $(id -u):$(id -g) /path/on/host/to_process
+```
+
+Make sure to update the `volumes` section in the docker-compose file (or your deployment scripts) to mount the directories accordingly.
+
 ## Getting Started
 
 ### Running Locally
