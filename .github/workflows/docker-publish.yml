@@ -70,5 +70,6 @@ jobs:
 
       - name: Trigger Portainer Update Webhook
         if: success()
-        run: |
-          curl -X POST https://docker.subasically.me/api/stacks/webhooks/15b69d37-5587-430a-a019-9f641f55ef2c
+        uses: newarifrh/portainer-service-webhook@v1
+        with:
+          webhook_url: ${{ secrets.PORTAINER_WEBHOOK_URL }}
