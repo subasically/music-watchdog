@@ -42,11 +42,16 @@ def prepare_split_folder(file, path_to_dir):
 async def process_chunks(file, original_file_path, path_to_split_folder, music_segment_duration, skip_chunk, check_delay, output_file, shazam):
     """
     Split the audio file into chunks and try to recognize the song on each chunk.
+    The split_audio_file function is now passed a start_offset (in ms) to choose a segment beyond the beginning.
     """
-    # Split file into chunks
-    log.debug(f"Splitting file {file} into folder: {path_to_split_folder}")
+    # Set the desired start offset to 45 seconds (45000 milliseconds)
+    segment_offset = 45000
+
+    log.debug(
+        f"Splitting file {file} into folder: {path_to_split_folder} starting at offset {segment_offset} ms")
+    # Update the split_audio_file to accept a start_offset parameter.
     split_audio_file(original_file_path, path_to_split_folder,
-                     music_segment_duration, skip_chunk)
+                     music_segment_duration, skip_chunk, start_offset=segment_offset)
     split_files = [f for f in os.listdir(path_to_split_folder)
                    if os.path.isfile(os.path.join(path_to_split_folder, f))]
     split_files = sorted(split_files, key=alphanum_key)

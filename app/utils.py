@@ -3,6 +3,7 @@ import os
 import re
 import shutil
 import requests  # added import for downloading cover image
+import subprocess
 from mutagen.easyid3 import EasyID3
 from mutagen.id3 import ID3, TIT2, TPE1, APIC
 from pydub import AudioSegment
@@ -93,24 +94,23 @@ def update_mp3_metadata(file_path, track_data=None, title=None, artist=None, cov
     log.info(f"Metadata updated for {file_path}")
 
 
-def split_audio_file(input_file_path, output_folder_path, music_segment_duration, skip_chunk):
-    log.debug(f"Splitting audio file {input_file_path}")
-    audio = AudioSegment.from_file(input_file_path, format="mp3")
-    chunk_length_ms = music_segment_duration
-
-    if not os.path.exists(output_folder_path):
-        # Create the split folder if it doesn't exist
-        log.debug(f"Creating split folder: {output_folder_path}")
-        os.makedirs(output_folder_path, mode=0o777, exist_ok=True)
-
-    total_fragments = math.ceil(len(audio) / chunk_length_ms / skip_chunk)
-    log.info(
-        f"{total_fragments} fragments to be created (audio length: {len(audio)} ms)")
-    log.debug(f"Beginning splitting of file: {input_file_path}")
-    for i, chunk_start in enumerate(range(0, len(audio), chunk_length_ms)):
-        if i % skip_chunk == 0:
-            chunk = audio[chunk_start: chunk_start + chunk_length_ms]
-            output_file_path = os.path.join(
-                output_folder_path, f"chunk_{i}.mp3")
-            chunk.export(output_file_path, format="mp3")
-            log.debug(f"Exported chunk_{i}.mp3 at {output_file_path}")
+def split_audio_file(input_file, output_folder, duration, skip_chunk, start_offset=0):
+    """
+    Splits an audio file using ffmpeg. 
+    Added start_offset (in milliseconds) to begin extraction after a given offset.
+    """
+    # Convert ms to seconds for ffmpeg.
+    start_sec = start_offset / 1000.0
+    duration_sec = duration / 1000.0
+    # Construct the output fragment file name (you may loop or generate multiple fragments).
+    output_file = f"{output_folder}/chunk_0.mp3"
+    ffmpeg_cmd = [
+        "ffmpeg",
+        "-ss", str(start_sec),           # start offset
+        "-i", input_file,
+        "-t", str(duration_sec),         # duration to extract
+        "-c", "copy",
+        output_file,
+        "-y"
+    ]
+    subprocess.run(ffmpeg_cmd, check=True)
