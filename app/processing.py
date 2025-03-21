@@ -6,8 +6,24 @@ import convert_m4a
 from utils import alphanum_key, split_audio_file
 from recognize import recognize
 from sftp_upload import upload_file_sftp
+import unicodedata
 
 log = logger.logger
+
+
+def sanitize_filename(filename):
+    """
+    Normalize the filename to remove most special characters.
+    This returns only ASCII characters.
+    """
+    # Normalize the string to NFKD form.
+    normalized = unicodedata.normalize("NFKD", filename)
+    # Encode to ASCII bytes, ignoring characters that can’t be encoded,
+    # then decode back to string.
+    ascii_filename = normalized.encode("ASCII", "ignore").decode("ASCII")
+    # Optionally replace spaces or undesired characters.
+    ascii_filename = ascii_filename.replace(" ", "_")
+    return ascii_filename
 
 
 async def handle_conversion(file, path_to_dir):
@@ -75,20 +91,22 @@ async def process_chunks(file, original_file_path, path_to_split_folder, music_s
 
 def move_file(original_file_path, file, path_to_dir, processed_folder, recognized_success):
     """
-    Move the processed file to the correct folder.
+    Move the processed file to the correct folder after sanitizing its filename.
     """
     if recognized_success:
         dest_folder = processed_folder
     else:
         dest_folder = os.path.join(path_to_dir, "unrecognized")
         if not os.path.exists(dest_folder):
-            # Create the unrecognized folder if it doesn't exist
             log.debug(f"Creating unrecognized folder: {dest_folder}")
             os.makedirs(dest_folder, mode=0o777, exist_ok=True)
-    dest_path = os.path.join(dest_folder, file)
+
+    # Sanitize the filename to remove or replace special characters.
+    safe_filename = sanitize_filename(file)
+    dest_path = os.path.join(dest_folder, safe_filename)
     log.info(f"Moving file from {original_file_path} to {dest_path}")
     shutil.move(original_file_path, dest_path)
-    return dest_path  # return new path after moving
+    return dest_path  # Return new path after moving
 
 
 async def process_file(file, path_to_dir, processed_folder, music_segment_duration, skip_chunk, check_delay, output_file, shazam):
