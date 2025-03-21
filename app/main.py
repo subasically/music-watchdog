@@ -58,7 +58,6 @@ async def main():
             if processed_files:
                 for file in processed_files:
                     log.info(f"Found processed file pending upload: {file}")
-                    # Upload the processed file to SFTP.
                     file_path = os.path.join(processed_folder, file)
                     # Retrieve SFTP credentials from environment.
                     sftp_username = os.environ.get("SFTP_USERNAME")
@@ -79,10 +78,10 @@ async def main():
             else:
                 log.info("No processed files pending upload.")
 
-            # Sleep longer when there's no file to process.
-            await asyncio.sleep(60)
-        log.debug("Waiting 1 second before next processing cycle.")
-        await asyncio.sleep(1)
+        log.info(f"Sleeping for {sleep_time_minutes} minutes.")
+        await asyncio.sleep(sleep_time_seconds)
+
+asyncio.run(main())
 
 
 asyncio.run(main())
